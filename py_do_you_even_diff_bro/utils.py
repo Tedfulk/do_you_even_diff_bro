@@ -39,7 +39,7 @@ class StrEnum(str, Enum):
         return [member.name for member in instance]
 
 
-def run_shell_command(command):
+def run_shell_command(command: str) -> str:
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     output, error = process.communicate()
 
@@ -47,4 +47,4 @@ def run_shell_command(command):
         print(f"Error: {error}")
         return None
     else:
-        return output
+        return output.decode("utf-8")

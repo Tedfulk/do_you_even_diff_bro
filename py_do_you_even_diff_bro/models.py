@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from utils import StrEnum
+from py_do_you_even_diff_bro.utils import StrEnum
 
 
 class GPTRequest(BaseModel):

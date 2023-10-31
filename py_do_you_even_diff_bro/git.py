@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-from .utils import run_shell_command
+from py_do_you_even_diff_bro.utils import run_shell_command
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
