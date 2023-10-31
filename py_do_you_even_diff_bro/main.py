@@ -1,15 +1,18 @@
 from typing import List, Optional
+
 import typer
 from rich.console import Console
 from rich.table import Table
+from typing_extensions import Annotated
+
+from py_do_you_even_diff_bro.commandments import SUMMARY_BRO_PROMPT, get_diff_prompt
 from py_do_you_even_diff_bro.constants import (
-    PROGRAMMING_FILE_EXTENSIONS,
     DETAILED_BROGRAMMER_DESCRIPTION,
+    PROGRAMMING_FILE_EXTENSIONS,
 )
+from py_do_you_even_diff_bro.git import get_git_diff
 from py_do_you_even_diff_bro.llm import prompt
 from py_do_you_even_diff_bro.models import BroMode
-from py_do_you_even_diff_bro.git import get_git_diff
-from py_do_you_even_diff_bro.commandments import get_diff_prompt, SUMMARY_BRO_PROMPT
 
 app = typer.Typer(help=DETAILED_BROGRAMMER_DESCRIPTION)
 console = Console()
@@ -36,8 +39,10 @@ def determine_bro_mode(chill: bool, mid: bool, chad: bool, model: str) -> BroMod
             user_input = input(
                 "Chad mode is engaged. It is suggested to use 'gpt-4' model for optimal results. Do you want to switch to 'gpt-4'? (y/n): "
             )
-            if user_input.lower() in ["yes", "y"]:
-                model = "gpt-4"
+            if user_input.lower() not in ["yes", "y"]:
+                model = input(
+                    "Enter the model you want to use (e.g., 'gpt-3.5-turbo'): "
+                )
     return bro_mode, model
 
 
@@ -59,7 +64,7 @@ def run_diff(
     summarize: bool,
 ):
     print(
-        f"Building prompt for diffbro in bromode: '{bro_mode}' mode on GPT model '{model}'"
+        f"Building prompt for diffbro in bromode: '{bro_mode.name.lower()}' mode on GPT model '{model}'"
         f"{f' with custom prompt: {custom_prompt}' if custom_prompt else ''}"
         f"{f' Will generate diff summary.' if summarize else ''}"
     )
@@ -94,7 +99,7 @@ def main(
     chad: bool = typer.Option(
         False, help="Get a chad, sr-level engineer, intense diffbro PR review"
     ),
-    model: str = typer.Option("gpt-4", help="GPT model use 'gpt-3.5-turbo' or 'gpt-4'"),
+    model: Annotated[Optional[str], typer.Argument()] = "gpt-4",
     only: List[str] = typer.Option(
         PROGRAMMING_FILE_EXTENSIONS, help="Only include files with these extensions"
     ),

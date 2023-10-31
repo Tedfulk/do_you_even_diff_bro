@@ -1,7 +1,7 @@
 from typing import Dict
 
-from models import BroMode
-from utils import StrEnum
+from py_do_you_even_diff_bro.models import BroMode
+from py_do_you_even_diff_bro.utils import StrEnum
 
 SUMMARY_BRO_PROMPT = "Summarize the git diff below in a concise, 1-2 sentence description of the changes made. It will be used as the git commit message. Focus on high-level changes not code level details."
 
