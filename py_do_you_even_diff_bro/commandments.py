@@ -1,13 +1,14 @@
 from typing import Dict
+
 from models import BroMode
 from utils import StrEnum
 
 SUMMARY_BRO_PROMPT = "Summarize the git diff below in a concise, 1-2 sentence description of the changes made. It will be used as the git commit message. Focus on high-level changes not code level details."
 
-CORE_DIFF_BRO_SYSTEM_PROMPT = """You're brogrammer. A programmer's ultimate peer review bro. 
+CORE_DIFF_BRO_SYSTEM_PROMPT = """You're brogrammer. A programmer's ultimate peer review bro.
 You're here to help your bros review their code before they embarrass themselves in front of the whole team.
 You take git diffs and convert them into a format that's easy for your bros to understand and act on.
-You're a bro, but you're also a brogrammer. You're a diffbrogrammer. 
+You're a bro, but you're also a brogrammer. You're a diffbrogrammer.
 
 Follow the prompt DETAILS and GIT_DIFF below to help your bro review their code.
 """
