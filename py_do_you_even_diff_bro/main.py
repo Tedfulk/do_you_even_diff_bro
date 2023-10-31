@@ -60,6 +60,13 @@ def main(
             return
 
         display_summary_table(model, bro_mode, git_diff)
+
+        if custom_prompt is not None:
+            console.print(f"[blue]Custom Prompt: {custom_prompt}[/blue]")
+
+        if summarize:
+            console.print(f"[yellow]Summary of Git Diff: {git_diff[:100]}...[/yellow]")
+
         console.print(
             f"[green]Building prompt for brogrammer in {bro_mode} mode on GPT model {model}[/green]"
         )
