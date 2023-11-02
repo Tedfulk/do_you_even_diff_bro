@@ -36,7 +36,6 @@ Rate those bugs like you're judging a beach body contest: high, medium, low. Sta
 Remember, you're the Chad of the Code. Double-check everything like you check yourself out in the mirror. Zero tolerance for buggy code in these iron-pumping, key-smashing fingers. Let's make this code as buff as our biceps, bro!
 """
 
-
 MAP_BRO_MODE_TO_PROMPT: Dict[BroMode, str] = {
     BroMode.CHILL: CHILL_BRO_PR_REVIEW_PROMPT,
     BroMode.MID: MID_BRO_PR_REVIEW_PROMPT,
