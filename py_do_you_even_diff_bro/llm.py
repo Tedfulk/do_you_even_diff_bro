@@ -28,7 +28,7 @@ def response_parser(response: Dict[str, Any]) -> str:
     return safe_get(response, "choices.0.message.content")
 
 
-def prompt(prompt: str, model: str = "gpt-4") -> str:
+def gpt_prompt(prompt: str, model: str = "gpt-4") -> str:
     if not openai.api_key:
         sys.exit(
             """
