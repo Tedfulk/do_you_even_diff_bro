@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from py_do_you_even_diff_bro.utils import StrEnum
 
@@ -16,7 +16,7 @@ class BugBase(BaseModel):
     bug_id: str
     description: str
 
-    @validator("bug_id")
+    @field_validator("bug_id")
     def validate_bug_id(cls, v):
         if not v.startswith("B") or not v[1:].isdigit():
             raise ValueError("bug_id must start with B followed by numbers")
