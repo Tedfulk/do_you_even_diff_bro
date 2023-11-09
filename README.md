@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This project is a command-line tool named BROGRAMMER, an AI Peer Review Bro. It uses the GPT model to review your code and provide feedback. The tool is designed to be flexible, allowing you to specify the level of feedback you want, the files you want to include or exclude, and even the branch to compare the git diff against.
 

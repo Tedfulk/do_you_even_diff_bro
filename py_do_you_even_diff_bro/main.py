@@ -1,15 +1,18 @@
+from typing import List
+
 import typer
 from rich.console import Console
 from rich.table import Table
+from typer import Argument, Option, confirm, prompt
+
 from py_do_you_even_diff_bro.commandments import SUMMARY_BRO_PROMPT, get_diff_prompt
 from py_do_you_even_diff_bro.constants import (
     DETAILED_BROGRAMMER_DESCRIPTION,
     PROGRAMMING_FILE_EXTENSIONS,
 )
 from py_do_you_even_diff_bro.git import get_git_diff
-from py_do_you_even_diff_bro.models import BroMode
 from py_do_you_even_diff_bro.llm import gpt_prompt
-
+from py_do_you_even_diff_bro.models import BroMode
 
 app = typer.Typer(
     name="BROGRAMMER",
@@ -29,6 +32,17 @@ def display_diff_summary(summary_diff_response: str):
     table.add_column("Summary", justify="left")
     table.add_row(summary_diff_response)
     console.print(table)
+
+
+def validate_extensions(
+    ctx: typer.Context, param: typer.CallbackParam, value: List[str]
+) -> List[str]:
+    invalid_exts = [ext for ext in value if ext not in PROGRAMMING_FILE_EXTENSIONS]
+    if invalid_exts:
+        for ext in invalid_exts:
+            console.log(f"Invalid file extension: {ext}", style="bold red")
+        raise typer.BadParameter(f"Invalid extensions: {', '.join(invalid_exts)}")
+    return value
 
 
 @app.command()
@@ -54,10 +68,14 @@ def main(
     only: list[str] = typer.Option(
         PROGRAMMING_FILE_EXTENSIONS,
         "--only",
+        callback=validate_extensions,
         help="Only include files with these extensions",
     ),
     ignore: list[str] = typer.Option(
-        [], "--ignore", help="Ignore files with these extensions"
+        [],
+        "--ignore",
+        callback=validate_extensions,
+        help="Ignore files with these extensions",
     ),
     prompt: str = typer.Option("", "--prompt", "-p", help="Specify a custom prompt"),
     summarize: bool = typer.Option(
