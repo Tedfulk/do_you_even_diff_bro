@@ -74,5 +74,5 @@ Examples:
       brogrammer --mid --model gpt-4 --ignore .tsx
 
   * I want legit reviews of all the diff:
-      brogrammer --chad 
+      brogrammer --chad
 """
