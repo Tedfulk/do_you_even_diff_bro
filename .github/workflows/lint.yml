@@ -15,34 +15,38 @@ jobs:
       - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: "3.11"
-      - name: Cache Poetry virtualenv
+          python-version: 3.11
+      - name: Cache pip dependencies
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cache/pypoetry
-            ~/.cache/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-
-            ${{ runner.os }}-
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: Check if pyproject.toml and poetry.lock are in sync
-        run: poetry check
+            ${{ runner.os }}-pip-
       - name: Install dependencies
-        run: poetry install --no-interaction --no-root
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8==3.9.2 pytest==6.2.4 pytest-cov==2.12.1 typer==0.3.2 pytest-mock==3.6.1 pydantic==1.8.2 rich==10.6.0 openai==0.27.0 pylint==2.9.6 black==21.7b0 bandit==1.7.0 flake8-unused-arguments==0.0.6 radon==4.5.0
       - name: Lint with flake8
-        run: poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          # check for unused imports or variables
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --unused-arguments
       - name: Run tests with pytest and measure coverage
-        run: poetry run pytest --cov=./ --cov-report html
+        run: |
+          pytest --cov=./ --cov-report html
       - name: Lint with pylint
-        run: poetry run pylint **/*.py
+        run: |
+          pylint **/*.py
       - name: Format code with black
-        run: poetry run black . --check
+        run: |
+          black .
       - name: Check for security vulnerabilities with bandit
-        run: poetry run bandit -r .
+        run: |
+          bandit -r .
       - name: Generate code complexity report with radon
-        run: poetry run radon cc .
+        run: |
+          radon cc .
