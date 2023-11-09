@@ -18,44 +18,44 @@ The `constants.py` and `commandments.py` files contain constant values and funct
 
 ## How to Use
 
-To use the tool, run the `main.py` script with the desired options. For example, to get a chill, jr-level engineer review, use the `--chill` option:
+To use the tool, run the `python -m py_do_you_even_diff_bro.main` script with the desired options. For example, to get a chill, jr-level engineer review, use the `--chill` option:
 
 ```bash
-python main.py --chill
+python -m py_do_you_even_diff_bro.main --chill
 ```
 
 To specify the GPT model to use, use the `--model` option:
 
 ```bash
-python main.py --model gpt-4
+python -m py_do_you_even_diff_bro.main --model gpt-4
 ```
 
 To only include files with certain extensions, use the `--only` option:
 
 ```bash
-python main.py --only .py .js
+python -m py_do_you_even_diff_bro.main --only .py .js
 ```
 
 To ignore files with certain extensions, use the `--ignore` option:
 
 ```bash
-python main.py --ignore .txt .md
+python -m py_do_you_even_diff_bro.main --ignore .txt .md
 ```
 
 To specify a custom prompt for the GPT model, use the `--prompt` option:
 
 ```bash
-python main.py --prompt "Review this code"
+python -m py_do_you_even_diff_bro.main --prompt "Review this code"
 ```
 
 To summarize the git diff, use the `--summarize` option:
 
 ```bash
-python main.py --summarize
+python -m py_do_you_even_diff_bro.main --summarize
 ```
 
 To specify the branch to compare the git diff against, use the `--peer-review` option:
 
 ```bash
-python main.py --peer-review main
+python -m py_do_you_even_diff_bro.main --peer-review main
 ```
