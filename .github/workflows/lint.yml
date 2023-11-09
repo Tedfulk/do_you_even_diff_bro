@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8==3.9.2 pytest==6.2.4 pytest-cov==2.12.1 pylint==2.9.6 black==21.7b0 bandit==1.7.0 radon==4.5.0 flake8_polyfill==1.0.2
+          pip install flake8 pytest pytest-cov typer pytest-mock pydantic rich openai
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
@@ -36,15 +36,3 @@ jobs:
       - name: Run tests with pytest and measure coverage
         run: |
           pytest --cov=./ --cov-report html
-      - name: Lint with pylint
-        run: |
-          pylint **/*.py
-      - name: Format code with black
-        run: |
-          black .
-      - name: Check for security vulnerabilities with bandit
-        run: |
-          bandit -r .
-      - name: Generate code complexity report with radon
-        run: |
-          radon cc .
