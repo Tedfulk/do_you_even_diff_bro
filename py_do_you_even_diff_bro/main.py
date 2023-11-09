@@ -3,7 +3,6 @@ from typing import List
 import typer
 from rich.console import Console
 from rich.table import Table
-from typer import Argument, Option, confirm, prompt
 
 from py_do_you_even_diff_bro.commandments import SUMMARY_BRO_PROMPT, get_diff_prompt
 from py_do_you_even_diff_bro.constants import (
